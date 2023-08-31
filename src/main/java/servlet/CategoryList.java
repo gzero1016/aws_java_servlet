@@ -56,7 +56,8 @@ public class CategoryList extends HttpServlet {
 		new Feed("10번피드", "체험관광"),
 		new Feed("11번피드", "문화예술"),
 		new Feed("12번피드", "문화예술"),
-		new Feed("13번피드", "카페")	
+		new Feed("13번피드", "카페"),
+		new Feed("14번피드", "카페"),
 	};
 	
 	// doGet, goPost 는 void로 반환값이 없음 response로 응답을 해주는것
