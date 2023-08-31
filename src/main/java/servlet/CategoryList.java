@@ -58,7 +58,8 @@ public class CategoryList extends HttpServlet {
 		new Feed("12번피드", "문화예술"),
 		new Feed("13번피드", "카페")	
 	};
-       
+	
+	// doGet, goPost 는 void로 반환값이 없음 response로 응답을 해주는것
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(request.getRequestURI());
 		System.out.println(request.getMethod());
@@ -79,8 +80,9 @@ public class CategoryList extends HttpServlet {
 //		});
 //		
 //		response.setCharacterEncoding("UTF-8");
-//		//getWriter: response에 있는 데이터 가져오기
-//		//println(responsData.getPlain()): 가져온 데이터를 클라이언트에게 보내주기
+//		
+//		//getWriter: response에 있는 데이터 가져오기(응답하려면 getWriter이 무조건 있어야함)
+//		//println(responsData.getPlain()): 가져온 데이터를 클라이언트에게 보내주기(응답하면서 println으로 데이터 전송)
 //		response.getWriter().println(responsData.getPlain());
 		
 		Gson gson = new Gson();
