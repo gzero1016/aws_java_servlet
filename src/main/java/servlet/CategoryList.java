@@ -81,8 +81,7 @@ public class CategoryList extends HttpServlet {
 //		
 //		response.setCharacterEncoding("UTF-8");
 //		
-//		//getWriter: response에 있는 데이터 가져오기(응답하려면 getWriter이 무조건 있어야함)
-//		//println(responsData.getPlain()): 가져온 데이터를 클라이언트에게 보내주기(응답하면서 println으로 데이터 전송)
+//		//getWriter: response에 있는 데이터 가져와서 클라이언트에게 전송(응답하려면 getWriter이 무조건 있어야함)
 //		response.getWriter().println(responsData.getPlain());
 		
 		Gson gson = new Gson();
