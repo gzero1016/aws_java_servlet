@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import data.UserData;
+import entity.User;
 import utils.JsonParseUtil;
 import utils.ResponseUtil;
 
@@ -67,16 +70,21 @@ public class SignupServlet extends HttpServlet {
 		// Map으로 만들어졌는지 확인
 		System.out.println(userMap);
 		
-//		// Map 객체로 만들어놨기 때문에 하나씩 get을 할 수 있음
-//		System.out.println(userMap.get("username"));
-//		System.out.println(userMap.get("passowrd"));
-//		System.out.println(userMap.get("name"));
-//		System.out.println(userMap.get("email"));
+		// User를 받는새로운 리스트를 만들어 builder로 하나씩 꺼내서 추가해주는 코드
+		List<User> userList = UserData.userList;
+		User user = User.builder()
+				.UserId(userList.size() +1)
+				.username((String)userMap.get("username"))
+				.password((String) userMap.get("password"))
+				.name((String) userMap.get("name"))
+				.email((String) userMap.get("email"))
+				.build();
 		
-		System.out.println("회원가입");
+		userList.add(user);
 		
+		System.out.println(userList);
 		
-		// 응답
-		ResponseUtil.response(response).of(200).body("회원가입 성공");
+		// 응답 (201번: 성공코드중 생성완료임/ 회원가입, 데이터추가는 201번 코드사용)
+		ResponseUtil.response(response).of(201).body(true);
 	}
 }

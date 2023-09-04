@@ -20,7 +20,7 @@ public class CorsFilter extends HttpFilter implements Filter {
 		// 필터로 들어온 친구들은 업캐스팅 되어서 들어오기때문에 다운캐스팅을 해줘야 setHeader를 사용할 수 있다.
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");	//Origin: 요청을 보낸쪽 (http://localhost:3000 여기만 요청을 받는다.)
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");	//Origin: 요청을 보낸쪽 (http://localhost:3000 여기만 요청을 받는다.)
 		httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept");
 		httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
 		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");	//3600: 1시간을 의미

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.ServletException;
@@ -11,26 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import data.UserData;
 import entity.User;
+import utils.JsonParseUtil;
 import utils.ResponseUtil;
 
-
-@WebServlet("/auth/signup/duplicate/username")
-public class DuplicateUsername extends HttpServlet {
+@WebServlet("/auth/signin")
+public class SigninServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	//	get요청일때는 Parameter로 넘어온다
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		
-		String username = request.getParameter("username");
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Map<String, Object> signinUser = JsonParseUtil.toMap(request.getInputStream());
 		Boolean responseData = false;
 		
+		System.out.println(signinUser.get("username"));
+		System.out.println(signinUser.get("password"));
+		
 		for(User user : UserData.userList) {
-			if(Objects.equals(user.getUsername(), username)) {
+			if(Objects.equals(user.getUsername(), signinUser.get("username"))
+					&& Objects.equals(user.getPassword(), signinUser.get("password"))) {
 				responseData = true;
 				break;
 			}
 		}
-		
 		ResponseUtil.response(response).of(200).body(responseData);
 	}
 }

@@ -40,20 +40,47 @@ function Signup(props) {
                 username: signupUser.username
             }
         }
-        // axios의 좋은점은 해당 객체를 자동으로 JSON으로 변경해준다.
-        // 클라이언트가 서버한테 넘겨주는 요청값
-        axios.get("http://localhost:8080/servlet_study_jiyoung/auth/signup/duplicate/username", option)
-        // 서버가 클라이언트에게 넘겨주는 응답
-        .then((response) => {
-            // 중복확인 후 중복이 아닐경우 회원가입
-            axios.post("http://localhost:8080/servlet_study_jiyoung/auth/signup", signupUser)
-            .then((response) => {
-                alert(response.data);   // 응답
-                navigate("/signin");    // 이동하고자하는 경로
-            })
-        }).catch((error) => {
-            alert("중복된 아이디입니다.");  // 중복응답
-        })
+
+        // 비동기 안에서 순서대로 실행하고자할때 await을 활용하면 편하게 비동기안에서 동기적으로 사용할 수 있다. (동기적)
+        const signup = async () => {
+            let response = await axios.get("http://localhost:8080/servlet_study_jiyoung/auth/signup/duplicate/username", option);
+
+            if(response.data) {
+                alert("중복된 아이디입니다.");
+                return;
+            }
+
+            try {
+                response = await axios.post("http://localhost:8080/servlet_study_jiyoung/auth/signup", signupUser);
+                if(!response.data) {
+                    throw new Error(response);
+                }
+                alert("회원가입 성공!");
+                navigate("/signin");
+            }catch(error) {
+                console.log(error);
+            }
+        };
+
+        // 위 랑 같은 코드를 비동기
+        // // axios의 좋은점은 해당 객체를 자동으로 JSON으로 변경해준다.
+        // // 클라이언트가 서버한테 넘겨주는 요청값
+        // axios.get("http://localhost:8080/servlet_study_jiyoung/auth/signup/duplicate/username", option)
+        // // 서버가 클라이언트에게 넘겨주는 응답
+        // .then((response) => {
+        //     console.log(response);
+        //     // data는 서버에서 받아온 body부분
+        //     const isDuplicateUsername = response.data //(false가 들어감)
+        //     if(isDuplicateUsername) {
+        //         // 아이디가 중복되었을때
+        //     } else {
+        //         // 중복되지않고 사용가능한 아이디일때
+        //     }
+        // }).catch((error) => {
+
+        // })
+
+        signup();
     }
 
     return (
