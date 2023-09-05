@@ -27,7 +27,7 @@ public class ProfileServlet extends HttpServlet {
 		System.out.println(token);
 		
 		// SecurityContextHolder 에서 findAuthenticationByToken 이것을 꺼내어 User에 담는다.
-		User user = SecurityContextHolder.findAuthenticationByToken(token).getUser();
+		User user = SecurityContextHolder.findAuthenticationByToken(token).getUser();	//getUser는 Authentication에 User를 가져오는거
 		
 		// 마찬가지로 응답을 Json으로 변형해서 넘겨준다.
 		ResponseUtil.response(response).of(200).body(JsonParseUtil.toJson(user));
@@ -43,12 +43,12 @@ public class ProfileServlet extends HttpServlet {
 		
 		System.out.println(oldUser);
 		
-		// 
+		// 회원가입할때 집어넣은 userList
 		List<User> userList = UserData.userList;
 		
 		System.out.println(userList);
 		
-		// 변경된 user
+		// user에 클라이언트에게 새로받아온 값으로 변경해주는거
 		User user = User.builder()
 				.UserId(oldUser.getUserId())	//아이디를 증가시키면안됨 유지해야함
 				.username((String)profileMap.get("username"))
@@ -57,12 +57,14 @@ public class ProfileServlet extends HttpServlet {
 				.email((String) profileMap.get("email"))
 				.build();
 		
-		//
+		// user에 있는 정보로만들어진 userList로 포문을 돌려 회원가입할때의 정보List와 현재 로그인해있는 List에
+		// 값을 변경해주고 클라이언트에게 HTTP true, false 응답을 보내주는 코드이다.
 		for(int i = 0; i < userList.size(); i++) {
 			if(userList.get(i).getUserId() == user.getUserId()) {
 				userList.set(i, user);	//회원가입 정보 변경 
 				authentication.setUser(user);	//로그인 정보 변경 
 				ResponseUtil.response(response).of(200).body(true);
+				return;
 			}
 		}
 		ResponseUtil.response(response).of(200).body(false);

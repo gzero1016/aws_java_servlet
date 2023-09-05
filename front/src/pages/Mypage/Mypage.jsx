@@ -14,6 +14,7 @@ function Mypage(props) {
     useEffect(() => {
         const getProfile = async() => {
             try {
+                // axios를 사용할때는 try, catch
                 const response = await axios.get(`http://localhost:8080/servlet_study_jiyoung/mypage/profile`, {
                     headers: {
                         Authorization: localStorage.getItem("token")

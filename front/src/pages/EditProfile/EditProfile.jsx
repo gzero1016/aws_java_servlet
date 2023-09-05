@@ -24,10 +24,10 @@ function EditProfile(props) {
     useEffect(() => {
         const getProfile = async() => {
             try {
-                const response = await axios.get(`http://localhost:8080/servlet_study_jiyoung/mypage/profile`, {
+                const response = await axios.get(`http://localhost:8080/servlet_study_jiyoung/mypage/profile`, {    // 어느서버에 요청을 날릴건지
                     headers: {
                         Authorization: localStorage.getItem("token")
-                    }
+                    }   // headers에 Authorization: 토큰을 요청날림
                 });
                 setProfile(response.data)
             }catch(error) {
@@ -39,7 +39,7 @@ function EditProfile(props) {
 
     const handleInputChange = (e) => {
         setProfile({
-            ...profile,
+            ...profile, // profile입력필드의 변화를 감지하여 [e.target.name]: e.target.value <- 요 값들을 Profile에 넣는거임
             [e.target.name]: e.target.value
         });
     }
@@ -48,10 +48,11 @@ function EditProfile(props) {
 
         const submit = async () => {
             const option = {
-                headers: {
+                headers: {  // headers에 Authorization: 토큰을 요청날림
                     Authorization: localStorage.getItem("token")
                 }
             }
+            // /mypage/profile 서버에 변화를 감지하여 집어넣은 profile(name:value) 와 headers에 Authorization: 토큰을 서버에 보내서저장
             const response = await axios.put("http://localhost:8080/servlet_study_jiyoung/mypage/profile", profile, option);
             if(response.data) {
                 alert("수정완료");
