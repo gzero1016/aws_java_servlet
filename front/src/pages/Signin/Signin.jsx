@@ -19,11 +19,16 @@ function Signin(props) {
         try {
             const response = await axios.post("http://localhost:8080/servlet_study_jiyoung/auth/signin", signinInput);
             
-            if(!response.data) {
+            console.log(response);
+
+            if(!response.data.token) {    // token이 없으면 로그인실패
                 alert("로그인 실패");
                 return;
             }
+            
+            localStorage.setItem("token", response.data?.token);
             alert("환영합니다.");
+
         } catch(error) {
             console.log(error);
         }

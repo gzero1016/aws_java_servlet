@@ -19,6 +19,8 @@ function MaiinHeader(props) {
             <Link to="/signin">로그인</Link>
             <Link to="/signup">회원가입</Link>
             <Link to="/async">비동기</Link>
+            <Link to="/mypage">마이페이지</Link>
+            <Link to="/edit">회원정보 수정</Link>
         </div>
     );
 }
